@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Hide Flag Users on X (formerly Twitter)
 // @namespace    http://tampermonkey.net/
-// @version      1.1
+// @version      1.2
 // @description  Hides posts from users with specified flag emojis in their name on X
 // @author       L00taveli
 // @match        https://x.com/*
@@ -21,14 +21,14 @@
         '🏳️‍⚧️', // Transgender Flag
         '🏳️‍🌈', // Pride Flag
         '🇷🇺', // Russian Flag
-        // '🇬🇧', // United Kingdom
         // Add more flags here, e.g., '🇫🇷' for France, '🇩🇪' for Germany, etc.
+        // '🇬🇧', // United Kingdom
     ];
 
     // Function to check and hide posts
     function hideFlagUsers() {
-        // Select all user names in tweets
-        const userNames = document.querySelectorAll('span[data-testid="User-Name"]');
+        // Select all user names in tweets, quote tweets, and reposts
+        const userNames = document.querySelectorAll('span[data-testid="User-Name"], div[data-testid="User-Name"]');
 
         userNames.forEach(name => {
             // Check if the name contains any of the specified flags
@@ -37,7 +37,7 @@
                 const tweet = name.closest('article');
                 if (tweet) {
                     tweet.style.display = 'none';
-                    console.log('Hid tweet from user: ' + name.textContent);
+                    console.log('Hid element from user: ' + name.textContent);
                 }
             }
         });
